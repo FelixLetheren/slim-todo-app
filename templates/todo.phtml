@@ -1,0 +1,27 @@
+<?php
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+<form method="post">
+    <input type="text" name="reminder">
+    <input type="submit">
+</form>
+<?php
+if (isset($_POST['reminder'])) {
+    $reminder = $_POST['reminder'];
+    echo '<h3>' . $reminder . '</h3>';
+}
+echo $successMessage;
+$template = new formatResults();
+$todoList = $template->templateResults($todoList);
+foreach ($todoList as $thisReminder) {
+    echo $thisReminder;
+}
+?>
+</body>
+</html>
