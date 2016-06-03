@@ -4,24 +4,73 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <style>
+        .container {
+            margin: 10px auto;
+            background: #ddd;
+            border-radius: 10px;
+            padding: 0 20px 20px 20px;
+        }
 
+        .reminder {
+            overflow: auto;
+            margin-top: 15px;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .reminder h3 {
+            margin-top: 0;
+        }
+    </style>
 </head>
 <body>
-<form method="post">
-    <input type="text" name="reminder">
-    <input type="submit">
-</form>
-<?php
-if (isset($_POST['reminder'])) {
-    $reminder = $_POST['reminder'];
-    echo '<h3>' . $reminder . '</h3>';
-}
-echo $successMessage;
-$template = new formatResults();
-$todoList = $template->templateResults($todoList);
-foreach ($todoList as $thisReminder) {
-    echo $thisReminder;
-}
-?>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Create a reminder</h2>
+            <form method="post" class="form-inline">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="reminder" placeholder="Remind me to...">
+                    <input class="btn btn-primary" type="submit" value="Save Reminder">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Reminders:</h2>
+            <?php
+            if (isset($_POST['reminder'])) {
+                $reminder = $_POST['reminder'];
+                echo '<h3>' . $reminder . '</h3>';
+            }
+            echo $successMessage;
+            ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-7">
+            <?php
+            foreach ($todoList as $field) { ?>
+                <form method="post" class="reminder">
+                    <div class="pull-right">
+                        <input type="submit" class="btn btn-default" value="Update Reminder">
+                    </div>
+                    <?php
+                        echo '<h3>' . $field['id'] . '. ' . $field['message'] . '</h3>';
+                        echo '<h6>Last updated: ' . $field['date'] . '</h6>';
+                        $done = ($field['done'] == '0' ? '' : 'checked');
+                        echo 'Done? <input type="checkbox" name="done[]" value="' . $field['id'] . '" ' . $done . '>';
+                    ?>
+                </form>
+            <?php } ?>
+        </div>
+    </div>
+</div>
 </body>
 </html>

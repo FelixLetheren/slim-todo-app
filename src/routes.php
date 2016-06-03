@@ -17,10 +17,8 @@ $app->get('/todo', function ($request, $response, $args) {
     $successMessage = "";
     $todoList = $model->getSqlReminders();
 
-    // For clarity
-    $formStatus = "Pre-submission";
     // Render index view
-    return $this->renderer->render($response, 'todo.phtml', ['todoList' => $todoList, 'successMessage' => $successMessage, 'formStatus' => $formStatus]);
+    return $this->renderer->render($response, 'todo.phtml', ['todoList' => $todoList, 'successMessage' => $successMessage]);
 });
 
 
@@ -43,9 +41,7 @@ $app->post('/todo', function ($request, $response, $args) {
     // Generate to do list
     $todoList = $model->getSqlReminders();
 
-    // For clarity
-    $formStatus = "<p>Post-submission</p>";
     // Render index view
-    return $this->renderer->render($response, 'todo.phtml', ['todoList' => $todoList, 'successMessage' => $successMessage, 'formStatus' => $formStatus]);
+    return $this->renderer->render($response, 'todo.phtml', ['todoList' => $todoList, 'successMessage' => $successMessage]);
 });
 // WOULD BE SIMPLER BY ADDING A NEW FILEPATH
